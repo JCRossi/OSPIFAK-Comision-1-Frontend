@@ -1,0 +1,101 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Estilos del contenedor del formulario */
+
+  
+  /* Estilos de la caja de inicio de sesión */
+  .login-box {
+    
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+  }
+  
+  .login-box h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .login-box label {
+    
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .login-box input {
+    
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  .login-box .error {
+    color: #e53e3e;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .forgot-password {
+    text-decoration: underline;
+    font-size: 14px;
+    color: #3182ce;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos del botón de "Ingresar" */
+  .login-box button {
+    
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 0; /* Elimina el margen superior para que el botón y el texto estén en la misma línea */
+  }
+  
+  /* Estilos de la imagen */
+  .login-box img {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 100px;
+    height: 90px;
+    opacity: 0.7;
+  }
+
+ 
+ 
+  /* Estilos del radio button "Recordarme" 
+  .remember-me-label {
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: flex-start; Alinea los elementos a la izquierda 
+  }
+  
+  .remember-me-label input {
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    margin-top: 0; Elimina el margen superior para alinear verticalmente con el texto 
+  }
+*/
