@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import './login.css';
 import axios from 'axios'; 
-import Link from 'next/link';
 
 
 export default function Login() {
@@ -44,7 +43,7 @@ export default function Login() {
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
         localStorage.setItem('token', response.data.token);
-        window.location.href = '/inicio';
+        window.location.href = '/dashboard';
         
       } else {
         setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');

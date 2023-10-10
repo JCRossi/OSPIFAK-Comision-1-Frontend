@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-home {
-  display: flex;
+.main-home {  display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* Esto centra verticalmente en la ventana */
@@ -22,4 +21,46 @@
   width: 100%;
   height: 100%;
   z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+}
+
+.navbar {
+  background-color: white;
+  font-size: 1rem;
+  font-family: 'serif', sans-serif;
+  color: black;
+  padding: 5px 0; /* Reducir el espacio de relleno en la parte superior e inferior */
+  height: 80px; /* Establecer la altura deseada */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre elementos en el contenedor */
+  align-items: center; /* Alinear verticalmente los elementos en el centro */
+}
+
+.cont {
+  justify-content: center;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.navbar li a {
+  color: grey;
+  text-decoration: none;
+  text-align: left; /* Alineación de texto a la izquierda */
+  padding: 10px 0; /* Agregar algún espacio entre los elementos */
+}
+
+.navbar .active a {
+  border-bottom: 2px solid #00cc00;
+  padding-bottom: 3px;
 }
