@@ -1,9 +1,12 @@
 "use client";
 import { useState } from 'react';
 import './login.css';
+import axios from 'axios'; 
+import Link from 'next/link';
+
 
 export default function Login() {
-  const [user, setUser] = useState('');
+  const [usuario, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
@@ -23,38 +26,32 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (user.trim() === '' || password.trim() === '') {
+    if (usuario.trim() === '' || password.trim() === '') {
       setError('Por favor, complete todos los campos.');
     } else {
       try {
-        const response = await login(user, password);
-
-        if (response.success) {
-          // Almacenar el token de sesión en localStorage
-          localStorage.setItem('token', response.token);
-
-          // Autenticación exitosa, redirige al usuario a la página deseada
-          router.push('/inicio');
-        } else {
-          setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
-        }
+        const response = await login(usuario, password);
       } catch (error) {
         setError('Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
       }
     }
   };
 
-  const login = async (user, password) => {
-    // Realizar una solicitud al servidor para autenticar al usuario
-    // y obtener un token de sesión
-    // Debes adaptar esto a tu servidor real y lógica de autenticación
-    return axios.post(`/api/login`, { user, password });
-    // Simulación de una respuesta exitosa (debes adaptar esto a tu servidor real)
-    /* if (user === 'usuario@ejemplo.com' && password === 'contraseña') {
-      return { success: true, token: 'token_de_prueba' };
-    } else {
-      return { success: false, token: null };
-    }*/
+  const login = async (usuario, password) => {
+    try {
+      const response = await axios.post('https://ospifak-backend-ecyuhbcpe-opsifak.vercel.app/rest/login', { usuario, password });
+      console.log(response);
+      if (response.status==200) {
+        // Almacenar el token de sesión en localStorage
+        localStorage.setItem('token', response.data.token);
+        window.location.href = '/inicio';
+        
+      } else {
+        setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+      }
+    } catch (error) {
+      setError('Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
+    }
   };
 
   return (
@@ -63,11 +60,11 @@ export default function Login() {
         <div className="login-box">
           <h1>Iniciar Sesión</h1>
           <div>
-            <label htmlFor="user">Usuario:</label>
+            <label htmlFor="usuario">Usuario:</label>
             <input
               type="text"
-              id="user"
-              value={user}
+              id="usuario"
+              value={usuario}
               onChange={handleUserChange}
               required
             />
@@ -97,7 +94,7 @@ export default function Login() {
           <a href="{{ route('password.request') }}" className="forgot-password">
             Olvidé mi contraseña
           </a>
-          <button type="submit">Ingresar</button>
+          <button type='submit'>Iniciar sesión</button>
         </div>
       </form>
     </div>

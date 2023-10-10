@@ -1,0 +1,1 @@
+export const API = 'https://ospifak-backend-eobbsbvju-opsifak.vercel.app/rest';
