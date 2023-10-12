@@ -28,25 +28,10 @@ export default function RegistrarMenor() {
   });
 
   const handleInputChange = (event) => {
-    const { id, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: value,
+      [event.target.id]: event.target.value,
     }));
-  
-    if (id === 'dni') {
-      if (!/^[0-9]+$/.test(value)) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          dni: 'El DNI debe contener solo números.',
-        }));
-      } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          dni: '',
-        }));
-      }
-    }
   };
 
   const handleRegister = async (event) => {
@@ -70,8 +55,15 @@ export default function RegistrarMenor() {
         telefono: '',
       });
     } catch (error) {
-      console.error(error.response.data);
-      toast.error(error.response.data.errors.join(', '));
+      // Comprueba si la respuesta contiene errores de validación
+      if (error.response.data.errors) {
+        const validationErrors = Object.values(error.response.data.errors).join(', ');
+        toast.error(validationErrors);
+      } else {
+        // Maneja otros errores de la solicitud
+        console.error(error);
+        toast.error('Se produjo un error al procesar la solicitud.');
+      }
     }
   };
 
@@ -89,7 +81,6 @@ export default function RegistrarMenor() {
                                     type="text"
                                     value={formData.dni}
                                     onChange={handleInputChange}
-                                    pattern="[0-9]+*" // Esta expresión regular solo permite números.
                                     required
                                 />
                                 <Form.Text className="text-danger">{formErrors.dni}</Form.Text>

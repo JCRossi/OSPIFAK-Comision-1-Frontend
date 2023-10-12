@@ -26,19 +26,7 @@ export default function Registrar() {
     plan_id: '',
     forma_pago: '',
   });
-  const [formErrors, setFormErrors] = useState({
-    usuario: '',
-    password: '',
-    dni: '',
-    nombre: '',
-    apellido: '',
-    fecha_nacimiento: '',
-    email: '',
-    direccion: '',
-    telefono: '',
-    plan_id: '',
-    forma_pago: '',
-  });
+
 
   useEffect(() => {
     axios.get(BASE_URL + '/planes')
@@ -56,63 +44,46 @@ export default function Registrar() {
       [event.target.id]: event.target.value,
     }));
   };
- /*const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
-    }));
-  
-    if (id === 'dni') {
-      if (!/^[0-9]+$/.test(value)) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          dni: 'El DNI debe contener solo números.',
-        }));
-      } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          dni: '',
-        }));
-      }
-    }
 
 
-  };*/
 
   const handleRegister = async (event) => {
     event.preventDefault();
-
+  
     try {
-      console.log(formData);
-      if (formData.dni === '' || formData.nombre === '' || formData.apellido === '' || 
-      formData.fecha_nacimiento === '' || formData.email === '' || formData.direccion === '' 
-      || formData.telefono === '' || formData.plan_id === '' || formData.forma_pago === '' ||  formData.password === '') {
-        toast.error('Los campos no pueden quedar vacíos');
-        return;
+      // Realiza la solicitud POST a Laravel
+      const response = await axios.post(BASE_URL + '/registrar', formData);
+  
+      // Comprueba si la respuesta contiene un mensaje de éxito
+      if (response.data.message) {
+        toast.success(response.data.message);
+        setFormData({
+          usuario: '',
+          password: '',
+          dni: '',
+          nombre: '',
+          apellido: '',
+          fecha_nacimiento: '',
+          email: '',
+          direccion: '',
+          telefono: '',
+          plan_id: '',
+          forma_pago: '',
+        });
       }
-      const response = await axios.post(BASE_URL+'/registrar', formData);
-      
-      toast.success('Registro exitoso');
-      console.log("se envio correctamente");
-      setFormData({
-        usuario: '',
-        password: '',
-        dni: '',
-        nombre: '',
-        apellido: '',
-        fecha_nacimiento: '',
-        email: '',
-        direccion: '',
-        telefono: '',
-        plan_id: '',
-        forma_pago: '',
-      });
     } catch (error) {
-      console.error(error.response.data);
-      //toast.error(error.response.data.errors.join(', '));
+      // Comprueba si la respuesta contiene errores de validación
+      if (error.response.data.errors) {
+        const validationErrors = Object.values(error.response.data.errors).join(', ');
+        toast.error(validationErrors);
+      } else {
+        // Maneja otros errores de la solicitud
+        console.error(error);
+        toast.error('Se produjo un error al procesar la solicitud.');
+      }
     }
   };
+  
 
   return (
     <>
@@ -148,10 +119,8 @@ export default function Registrar() {
                                     type="text"
                                     value={formData.dni}
                                     onChange={handleInputChange}
-                                    pattern="[0-9]+*" // Esta expresión regular solo permite números.
                                     required
                                 />
-                                <Form.Text className="text-danger">{formErrors.dni}</Form.Text>
                             </Form.Group>
                             <br/>
                             <Form.Group controlId="nombre">
