@@ -32,7 +32,7 @@
   height: 80px; /* Establecer la altura deseada */
 }
 
-.container {
+.container-navbar{
   display: flex;
   justify-content: space-between; /* Espacio entre elementos en el contenedor */
   align-items: center; /* Alinear verticalmente los elementos en el centro */

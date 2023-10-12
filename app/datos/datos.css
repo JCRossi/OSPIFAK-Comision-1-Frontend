@@ -6,11 +6,16 @@ body {
     padding: 0;
   }
   
-  .container {
+  .container-datos {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
   }
   
   h1 {

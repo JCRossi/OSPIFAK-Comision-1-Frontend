@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../navbar';
+import Navbar from '../navbar/navbar';
 import './datos.css';
 
 function Datos() {
@@ -21,7 +21,7 @@ function Datos() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="container">
+      <div className="container-datos">
         <h1>Información del Titular</h1>
         <div>
           <p className="info-label">Número de Identificación: {titular.numeroIdentificacion}</p>
