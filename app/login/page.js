@@ -38,7 +38,7 @@ export default function Login() {
 
   const login = async (usuario, password) => {
     try {
-      const response = await axios.post('https://ospifak-backend-ecyuhbcpe-opsifak.vercel.app/rest/login', { usuario, password });
+      const response = await axios.post('https://ospifak-backend-7g0vcdwwo-opsifak.vercel.app/rest/login', { usuario, password });
       console.log(response);
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
