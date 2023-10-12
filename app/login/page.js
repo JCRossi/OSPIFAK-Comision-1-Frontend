@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import './login.css';
 import axios from 'axios'; 
-
+import { BASE_URL } from '../constantes';
 
 export default function Login() {
   const [usuario, setUser] = useState('');
@@ -38,7 +38,7 @@ export default function Login() {
 
   const login = async (usuario, password) => {
     try {
-      const response = await axios.post('https://ospifak-backend-7g0vcdwwo-opsifak.vercel.app/rest/login', { usuario, password });
+      const response = await axios.post(BASE_URL+'/login', { usuario, password });
       console.log(response);
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage

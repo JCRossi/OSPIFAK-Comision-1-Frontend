@@ -7,11 +7,7 @@ export default function Navbar() {
             <a className="navbar-brand" href="/dashboard">
                 <img src="/imagen.jpeg" alt="Imagen" style={{ width: '120px', height: 'auto' }} />
             </a>
-            <div className="text-right"> 
-              <button className="navbar-toggler" type="button">
-                    Cliente <i className="fas fa-user"></i>      
-                  </button>
-            </div>
+            
         </div>
     </div>
     </>
