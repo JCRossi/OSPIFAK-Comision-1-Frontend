@@ -1,5 +1,9 @@
 h1{
-    color: green; 
+    color: rgb(0, 168, 90); 
     text-align: center;
-  }
+}
 
+h3{
+  color: rgb(0, 184, 122);
+  padding-left: 10px;
+}

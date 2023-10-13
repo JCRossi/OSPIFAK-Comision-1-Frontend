@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../navbar';
 import './registrar.css';
 import Button from 'react-bootstrap/Button';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Registrar() {
   const [planes, setPlanes] = useState([]);
@@ -87,12 +87,15 @@ export default function Registrar() {
 
   return (
     <>
-        <Navbar></Navbar> 
-            <h1>Alta Cliente</h1>
-            <Container>
+    <Navbar></Navbar> 
+    <br/>
+    <h1>Alta Cliente</h1>
+    <br/>
+    <h3>Titular</h3>
+          <Container>
             <Form onSubmit={handleRegister}>
                 <Row > 
-                    <Col md={6}>
+                    <Col md={6} className="left-column">
                             <Form.Group controlId="usuario"><br/>
                                 <Form.Label><h5>Usuario:</h5></Form.Label>
                                 <Form.Control
@@ -184,7 +187,7 @@ export default function Registrar() {
                             </Form.Group>
                             <br/>
                         </Col>
-                        <Col md={6}>
+                        <Col md={6} className="right-column">
                             <Form.Group controlId="plan_id">
                               <Form.Label><h5>Plan:</h5></Form.Label>
                               <Form.Select
@@ -224,8 +227,9 @@ export default function Registrar() {
                     </Row>
                 </Form>
             </Container>
+            
 
-            <h2>A Cargo</h2>                     
+            <h3>A Cargo</h3>                     
 
 
             
@@ -239,6 +243,7 @@ export default function Registrar() {
             </Button>
             <ToastContainer />
            
+    
     </>
   );
 }
