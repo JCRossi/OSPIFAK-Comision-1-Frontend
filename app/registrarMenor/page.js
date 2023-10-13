@@ -18,6 +18,7 @@ export default function RegistrarMenor() {
     apellido: '',
     fecha_nacimiento: '',
     telefono: '',
+    archivo: null,
   });
   const [formErrors, setFormErrors] = useState({
     dni: '',
@@ -25,6 +26,7 @@ export default function RegistrarMenor() {
     apellido: '',
     fecha_nacimiento: '',
     telefono: '',
+    archivo: null,
   });
 
   const handleInputChange = (event) => {
@@ -34,43 +36,35 @@ export default function RegistrarMenor() {
     }));
   };
 
+  const handleFileChange = (event) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      archivo: event.target.files[0], 
+    }));
+  };
+
   const handleRegister = async (event) => {
     event.preventDefault();
 
-    try {
-      if (formData.dni === '' || formData.nombre === '' || formData.apellido === '' || 
-      formData.fecha_nacimiento === '' || formData.telefono === '') {
+    if (formData.dni === '' || formData.nombre === '' || formData.apellido === '' || 
+      formData.fecha_nacimiento === '' ) {
         toast.error('Los campos no pueden quedar vacíos');
         return;
-      }
-      const response = await axios.post(BASE_URL+'/registrar', formData);
-      console.log(response.data);
-      toast.success('Registro exitoso');
-
-      setFormData({
+    }
+      
+    setFormData({
         dni: '',
         nombre: '',
         apellido: '',
         fecha_nacimiento: '',
         telefono: '',
-      });
-    } catch (error) {
-      // Comprueba si la respuesta contiene errores de validación
-      if (error.response.data.errors) {
-        const validationErrors = Object.values(error.response.data.errors).join(', ');
-        toast.error(validationErrors);
-      } else {
-        // Maneja otros errores de la solicitud
-        console.error(error);
-        toast.error('Se produjo un error al procesar la solicitud.');
-      }
-    }
+    });
   };
 
   return (
     <>
         <Navbar></Navbar> 
-            <h1>Alta Menor a Cargo</h1>
+            <h1 className='altaCliente'>Alta Menor a Cargo</h1>
             <Container>
             <Form onSubmit={handleRegister}>
                 <Row > 
@@ -85,7 +79,7 @@ export default function RegistrarMenor() {
                                 />
                                 <Form.Text className="text-danger">{formErrors.dni}</Form.Text>
                             </Form.Group>
-                            <br/>
+                            
                             <Form.Group controlId="nombre">
                                 <Form.Label><h5>Nombre:</h5></Form.Label>
                                 <Form.Control
@@ -95,8 +89,8 @@ export default function RegistrarMenor() {
                                     required
                                 />
                             </Form.Group>
-                            <br/>
-                            <Form.Group controlId="apellido"><br/>
+
+                            <Form.Group controlId="apellido">
                             <Form.Label><h5>Apellido:</h5></Form.Label>
                             <Form.Control
                                 type="text"
@@ -105,7 +99,7 @@ export default function RegistrarMenor() {
                                 required
                             />
                             </Form.Group>
-                            <br/>
+                            
                             <Form.Group controlId="fecha_nacimiento">
                             <Form.Label><h5>Fecha de Nacimiento:</h5></Form.Label>
                             <Form.Control
@@ -115,7 +109,6 @@ export default function RegistrarMenor() {
                                 required
                             />
                             </Form.Group>
-                            <br/>
                             <Form.Group controlId="telefono">
                             <Form.Label><h5>Telefono:</h5></Form.Label>
                             <Form.Control
@@ -125,19 +118,25 @@ export default function RegistrarMenor() {
                                 required
                             />
                             </Form.Group>
-                            <br/>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId="archivo">
+                                <Form.Label><h5>Archivo:</h5></Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    accept=".pdf"
+                                    value={formData.archivo}
+                                    onChange={handleFileChange}
+                                />
+                            </Form.Group>
                         </Col>
                     </Row>
                 </Form>
             </Container>
-
-            <Button variant="primary" type="submit">
-                Cancelar
-                </Button>
-            <Button variant="primary" type="submit">
-                Guardar Datos
-                </Button>
-
+            <Container className='botones'>
+                <Button variant="outline-primary">Cancelar</Button>
+                <Button variant="outline-success">Guardar datos</Button>
+            </Container>
             <ToastContainer />
     </>
   );

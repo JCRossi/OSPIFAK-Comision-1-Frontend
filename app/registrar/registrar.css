@@ -1,9 +1,35 @@
-h1{
-    color: rgb(0, 168, 90); 
-    text-align: center;
+
+
+.left-column{
+  display: grid;
+  margin-bottom: 0%;
 }
 
-h3{
+.altaCliente{
+    color: rgb(0, 168, 90); 
+    text-align: center;
+    font-size: xx-large;
+}
+
+.registrarCliente{
+  justify-content: flex-start;
+}
+
+h3.titular{
   color: rgb(0, 184, 122);
-  padding-left: 10px;
+  padding-left: 50px;
+  font-size: x-large;
+}
+
+.botones{
+  justify-content: flex-end;
+}
+
+.FormGroup{
+  justify-content: center;
+  
+}
+
+.menorACargo{
+  justify-content: left;
 }

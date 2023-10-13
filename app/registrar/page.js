@@ -88,15 +88,13 @@ export default function Registrar() {
   return (
     <>
     <Navbar></Navbar> 
-    <br/>
-    <h1>Alta Cliente</h1>
-    <br/>
-    <h3>Titular</h3>
-          <Container>
+    <h1 className='altaCliente'>Alta Cliente</h1>
+    <h3 className='titular'>Titular</h3>
+          <Container className='registrarCliente'>
             <Form onSubmit={handleRegister}>
                 <Row > 
                     <Col md={6} className="left-column">
-                            <Form.Group controlId="usuario"><br/>
+                            <Form.Group controlId="usuario">
                                 <Form.Label><h5>Usuario:</h5></Form.Label>
                                 <Form.Control
                                     type="text"
@@ -105,8 +103,8 @@ export default function Registrar() {
                                     required
                                 />
                             </Form.Group>
-                            <br/>
-                            <Form.Group controlId="password"><br/>
+                            
+                            <Form.Group controlId="password">
                                 <Form.Label><h5>Contraseña:</h5></Form.Label>
                                 <Form.Control
                                     type="password"
@@ -115,7 +113,7 @@ export default function Registrar() {
                                     required
                                 />
                             </Form.Group>
-                            <br/>
+                            
                             <Form.Group controlId="dni">
                                 <Form.Label><h5>DNI:</h5></Form.Label>
                                 <Form.Control
@@ -125,7 +123,7 @@ export default function Registrar() {
                                     required
                                 />
                             </Form.Group>
-                            <br/>
+                            
                             <Form.Group controlId="nombre">
                                 <Form.Label><h5>Nombre:</h5></Form.Label>
                                 <Form.Control
@@ -135,7 +133,7 @@ export default function Registrar() {
                                     required
                                 />
                             </Form.Group>
-                            <br/>
+                            
                             <Form.Group controlId="apellido"><br/>
                             <Form.Label><h5>Apellido:</h5></Form.Label>
                             <Form.Control
@@ -228,19 +226,17 @@ export default function Registrar() {
                 </Form>
             </Container>
             
-
-            <h3>A Cargo</h3>                     
-
-
-            
-            <Button variant="outline-success">
-              <Link href="/registrarMenor" className="bottom-bar-links">Menor a cargo</Link>
-            </Button>
-
+            <Container className='menorACargo'>
+              <h3>A Cargo</h3>                                   
+              <Button variant="outline-success">
+                <Link href="/registrarMenor" className="bottom-bar-links">Menor a cargo</Link>
+              </Button>
+            </Container>
           
-            <Button variant="primary" onClick={handleRegister}>
-                Guardar Datos
-            </Button>
+            <Container className='botones'>
+                <Button variant="outline-primary">Cancelar</Button>
+                <Button variant="outline-success"  onClick={handleRegister}>Guardar datos</Button>
+            </Container>
             <ToastContainer />
            
     
