@@ -1,0 +1,19 @@
+.solicitar{
+    font-size: 1.5rem;
+    text-align: left;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    color: gray;
+    transition: color 0.3s;
+}
+
+.solicitar:hover {
+    border-color: rgb(53, 111, 66);
+    color: rgb(53, 111, 66);
+    cursor: pointer;
+}
+
+.prestacionesTable{
+    font-size: 1.3rem;
+}
