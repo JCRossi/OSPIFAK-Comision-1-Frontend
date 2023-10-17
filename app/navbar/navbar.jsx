@@ -1,6 +1,19 @@
+'use client';
 import "./navbar.css";
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../contexto/userContext.jsx';
 
 export default function Navbar() {
+  const { username } = useContext(UserContext);
+  const [usuarioNavbar, setUsuarioNavbar] = useState(username);
+
+  useEffect(() => {
+    setUsuarioNavbar(username); // Actualiza usuarioNavbar cuando username cambia
+    console.log(username + 'usu');
+  console.log(usuarioNavbar + 'navbar');
+  }, [username]);
+
+
   return (
     <nav className="navbar navbar-expand-md navbar-light navbar shadow-sm">
       <div className="container-navbar">
@@ -10,7 +23,7 @@ export default function Navbar() {
         <ul className="navbar-nav">
           <li className="nav-item">
             <a className="nav-link">
-              Wanchope <i className="fas fa-user"></i>
+              {usuarioNavbar} <i className="fas fa-user"></i>
             </a>
           </li>
           <li className="nav-item">

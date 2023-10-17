@@ -1,8 +1,9 @@
 "use client";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './login.css';
 import axios from 'axios'; 
-
+import { UserContext } from '../contexto/userContext';
+import { API } from '../config.js'
 
 export default function Login() {
   const [usuario, setUser] = useState('');
@@ -10,6 +11,8 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
+  const { username, setUserName } = useContext(UserContext);
+  
   const handleUserChange = (e) => {
     setUser(e.target.value);
   };
@@ -30,6 +33,7 @@ export default function Login() {
     } else {
       try {
         const response = await login(usuario, password);
+        
       } catch (error) {
         setError('Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
       }
@@ -38,11 +42,13 @@ export default function Login() {
 
   const login = async (usuario, password) => {
     try {
-      const response = await axios.post('https://ospifak-backend-7g0vcdwwo-opsifak.vercel.app/rest/login', { usuario, password });
+      const response = await axios.post(API+'/login', { usuario, password });
       console.log(response);
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
         localStorage.setItem('token', response.data.token);
+        setUserName(usuario);
+        console.log(usuario+ 'login');
         window.location.href = '/dashboard';
         
       } else {
