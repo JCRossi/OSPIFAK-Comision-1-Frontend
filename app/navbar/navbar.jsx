@@ -5,14 +5,15 @@ import { UserContext } from '../contexto/userContext.jsx';
 
 export default function Navbar() {
   const { username } = useContext(UserContext);
-  const [usuarioNavbar, setUsuarioNavbar] = useState(username);
+  const [usuarioNavbar, setUsuarioNavbar] = useState('');
 
   useEffect(() => {
-    setUsuarioNavbar(username); // Actualiza usuarioNavbar cuando username cambia
-    console.log(username + 'usu');
-  console.log(usuarioNavbar + 'navbar');
+    setUsuarioNavbar(username);
   }, [username]);
 
+  if (username == '') {
+    return null;
+  }
 
   return (
     <nav className="navbar navbar-expand-md navbar-light navbar shadow-sm">

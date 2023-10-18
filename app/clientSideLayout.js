@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
+import Navbar from './navbar/navbar';
 import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google'
+
 import './globals.css'
 const UserProvider = dynamic(() => import('./contexto/userContext').then(mod => mod.UserProvider), {
   ssr: false
@@ -14,13 +16,13 @@ export const metadata = {
 }
 
 export default function ClientSideLayout({ children }) {
- 
   return (
     <html lang="en">
         <body className={inter.className}>
-        <UserProvider>
-          {children}
-        </UserProvider>
+          <UserProvider>
+            <Navbar />
+            {children}
+          </UserProvider>
         </body>
       </html>
   )

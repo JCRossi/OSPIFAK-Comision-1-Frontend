@@ -11,7 +11,7 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
 
-  const { username, setUserName } = useContext(UserContext);
+  const { actualizarNombre } = useContext(UserContext);
   
   const handleUserChange = (e) => {
     setUser(e.target.value);
@@ -43,12 +43,10 @@ export default function Login() {
   const login = async (usuario, password) => {
     try {
       const response = await axios.post(API+'/login', { usuario, password });
-      console.log(response);
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
         localStorage.setItem('token', response.data.token);
-        setUserName(usuario);
-        console.log(usuario+ 'login');
+        actualizarNombre(usuario);
         window.location.href = '/dashboard';
         
       } else {

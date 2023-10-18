@@ -1,23 +1,23 @@
 'use client';
 import React, { createContext, useState } from 'react';
 
+
 export const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
   const [username, setUsername] = useState('');
 
-  const setUserName = (usuario) => {
-    //if(username===null){
+  const actualizarNombre = (usuario) => {
+    try {
       setUsername(usuario);
-      console.log(username + ' contsdaqfexto');
-    //}
-    console.log(usuario + ' contexto'); // Utiliza 'usuario' en lugar de 'username'
-    console.log(username + ' csfhuagha'); // Esto puede mostrar el valor anterior
+    } catch (err) {
+      console.log(err + " error");
+    }
   };
 
   const contextValue = {
     username,
-    setUserName,
+    actualizarNombre,
   };
 
   return (
