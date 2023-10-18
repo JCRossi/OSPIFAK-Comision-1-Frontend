@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Navbar from './navbar/navbar';
+import Dashboard from './dashboard/page';
 import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google'
 
@@ -20,7 +20,7 @@ export default function ClientSideLayout({ children }) {
     <html lang="en">
         <body className={inter.className}>
           <UserProvider>
-            <Navbar />
+            <Dashboard />
             {children}
           </UserProvider>
         </body>
