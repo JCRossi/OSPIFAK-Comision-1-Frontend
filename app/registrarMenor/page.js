@@ -139,7 +139,7 @@ export default function RegistrarMenor() {
             </Container>
             <Container className='botones'>
                 <Button variant="outline-primary">Cancelar</Button>
-                <Button variant="outline-success">Guardar datos</Button>
+                <Button variant="outline-success"  onClick={handleRegister}>Guardar datos</Button>
                 
             </Container>
             <ToastContainer />

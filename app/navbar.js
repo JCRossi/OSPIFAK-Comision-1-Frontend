@@ -23,7 +23,7 @@ export default function Navbar() {
                     <img src="/imagen.jpeg" alt="Imagen" style={{ width: '120px', height: 'auto' }} />
                 </a>
                 <div className="d-flex align-items-center">
-                  <h6 className="ms-2">  Cliente {usuario} <FontAwesomeIcon icon={faUser} /> </h6>
+                  <h6 className="ms-2">{usuario} <FontAwesomeIcon icon={faUser} /> </h6>
                   <Button variant="outline-success" onClick={handleLogout} className="ms-2">
                   <FontAwesomeIcon icon={faSignOutAlt} /> 
                 </Button>

@@ -1,8 +1,8 @@
+"use client"
 import React from 'react';
-import Navbar from '../navbar';
 import './datos.css';
 
-function Datos() {
+export default function Datos() {
   const titular = {
     numeroIdentificacion: "12345",
     nombreApellido: "Nombre del Titular",
@@ -20,8 +20,7 @@ function Datos() {
 
   return (
     <>
-      <Navbar></Navbar>
-      <div className="container">
+      <div className="container-datos" style={{ marginTop: '2vh' }}>
         <h1>Información del Titular</h1>
         <div>
           <p className="info-label">Número de Identificación: {titular.numeroIdentificacion}</p>
@@ -44,5 +43,3 @@ function Datos() {
       </>
   );
 }
-
-export default Datos;
