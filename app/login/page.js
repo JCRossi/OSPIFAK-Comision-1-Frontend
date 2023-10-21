@@ -40,17 +40,13 @@ export default function Login() {
 
   const login = async (usuario, password) => {
     try {
-      console.log('hola');
-      const response = await axios.post('https://ospifak-backend-huxv5l5mf-opsifak.vercel.app/rest/login', { usuario, password, },{
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        }
-      });
+      const response = await axios.post('https://ospifak-backend-7azskamtv-opsifak.vercel.app/rest/login', { usuario, password });
+      console.log(response);
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
         console.log('hola11111111111111111111111111111111111111111111111111111111111111111111111');
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('nombre',  response.data.usuario.usuario);
         window.location.href = '/dashboard';
         console.log(response.data.token);
       } else {
@@ -61,7 +57,7 @@ export default function Login() {
       setError('Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
     }
   };
-
+  
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit}>
