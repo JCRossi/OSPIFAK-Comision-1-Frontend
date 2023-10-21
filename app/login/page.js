@@ -9,6 +9,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
+ // const isLoggedIn = !!localStorage.getItem('token'); // Verificar si existe el token en el localStorage
+
 
   const handleUserChange = (e) => {
     setUser(e.target.value);
@@ -38,15 +40,22 @@ export default function Login() {
 
   const login = async (usuario, password) => {
     try {
-      const response = await axios.post('https://ospifak-backend-7g0vcdwwo-opsifak.vercel.app/rest/login', { usuario, password });
-      console.log(response);
+      console.log('hola');
+      const response = await axios.post('https://ospifak-backend-huxv5l5mf-opsifak.vercel.app/rest/login', { usuario, password, },{
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        }
+      });
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
+        console.log('hola11111111111111111111111111111111111111111111111111111111111111111111111');
         localStorage.setItem('token', response.data.token);
         window.location.href = '/dashboard';
-        
+        console.log(response.data.token);
       } else {
-        setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+         console.log('chauu');
+        //setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {
       setError('Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
