@@ -1,7 +1,7 @@
 'use client';
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Form, Row, Col, Container } from 'react-bootstrap';
-import Link from 'next/link';
+//import Link from 'next/link';
 import axios from 'axios';
 import { BASE_URL } from '../constantes';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../navbar';
 import '../registrar/registrar.css';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 
 export default function RegistrarMenor() {
@@ -45,7 +46,7 @@ export default function RegistrarMenor() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await axios.post(BASE_URL + '/store', formData);
+    const response = await axios.post(BASE_URL +'/registrarMenor', formData);
 
     if (formData.dni === '' || formData.nombre === '' || formData.apellido === '' || 
       formData.fecha_nacimiento === '' ||formData.telefono === ''  ) {
@@ -62,6 +63,10 @@ export default function RegistrarMenor() {
         archivo: null,
     });
   };
+
+  function redireccionarAPagina() {
+    window.location.href = '/registrar';
+  }
 
   return (
     <>
@@ -139,8 +144,9 @@ export default function RegistrarMenor() {
             </Container>
             <Container className='botones'>
                 <Button variant="outline-primary">Cancelar</Button>
-                <Button variant="outline-success"  onClick={handleRegister}>Guardar datos</Button>
-                
+                <Button variant="outline-success" onClick={handleRegister} >
+                   Guardar datos
+                </Button>
             </Container>
             <ToastContainer />
     </>

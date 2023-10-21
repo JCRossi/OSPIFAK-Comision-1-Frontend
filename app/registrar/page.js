@@ -11,6 +11,7 @@ import './registrar.css';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 export default function Registrar() {
   const [planes, setPlanes] = useState([]);
   const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ export default function Registrar() {
     forma_pago: '',
   });
   const [clienteInfo, setClienteInfo] = useState(null); // State to store the client data
+ 
 
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function Registrar() {
       });
   }, []);
 
-  useEffect(() => {
+ /* useEffect(() => {
     // Make an HTTP GET request to your Laravel 'datos' endpoint
     axios.get(BASE_URL + '/datos', {
       params: {
@@ -54,7 +56,7 @@ export default function Registrar() {
       console.error('Error fetching client data:', error);
     });
   }, []); // Empty dependency array, so this effect runs once on component mount
-
+*/
   
   const handleInputChange = (event) => {
     setFormData((prevFormData) => ({
@@ -76,7 +78,7 @@ export default function Registrar() {
     try {
       // Realiza la solicitud POST a Laravel
       const response = await axios.post(BASE_URL + '/registrar', formData);
-  
+      console.log(response.data.message);
       // Comprueba si la respuesta contiene un mensaje de éxito
       if (response.data.message) {
         toast.success(response.data.message);
@@ -107,6 +109,12 @@ export default function Registrar() {
     }
   };
   
+  function redireccionarALogin() {
+    window.location.href = '/login';
+  }
+  function redireccionarAMenor() {
+    window.location.href = '/menor';
+  }
 
   return (
     <>
@@ -263,16 +271,15 @@ export default function Registrar() {
                 </Form>
             </Container>
             <br/><br/>
-            <Container className='menorACargo'>
-              <h3>A Cargo</h3>                                 
-              <Button variant="outline-success">
-                <Link href="/registrarMenor" className="bottom-bar-links">Menor a cargo</Link>
-              </Button>
+            <Container className='menorACargo'>                               
+            <Button variant="outline-success" onClick={() => { handleRegister(); redireccionarAMenor(); }}>+Menor a cargo</Button>
+
             </Container>
           
             <Container className='botones'>
                 <Button variant="outline-primary">Cancelar</Button>
-                <Button variant="outline-success"  onClick={handleRegister}>Guardar datos</Button>
+                <Button variant="outline-success" onClick={() => { handleRegister(); redireccionarALogin(); }}>Guardar datos</Button>
+
             </Container>
             <ToastContainer />
            
