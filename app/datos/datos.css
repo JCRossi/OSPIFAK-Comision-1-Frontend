@@ -6,11 +6,27 @@ body {
     padding: 0;
   }
   
-  .container-datos {
+  .container-datos-general {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    
+  }
+
+  .container-datos {
+    display:inline-flex; /* Utiliza flexbox para alinear los elementos */
+    align-items: center; /* Centra los elementos verticalmente */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .titular {
+    padding-right: 5%;
+  }
+
+  .integrantes {
+    padding-left: 5%;
   }
   
   h1 {

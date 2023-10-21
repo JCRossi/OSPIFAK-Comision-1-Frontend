@@ -1,1 +1,1 @@
-export const API = 'https://ospifak-backend-eobbsbvju-opsifak.vercel.app/rest';
+export const API = 'https://ospifak-backend-9b2vetlqn-opsifak.vercel.app/rest';
