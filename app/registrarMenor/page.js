@@ -6,11 +6,8 @@ import axios from 'axios';
 import { BASE_URL } from '../constantes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from '../navbar';
 import '../registrar/registrar.css';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-
 
 export default function RegistrarMenor() {
   const [formData, setFormData] = useState({
@@ -62,10 +59,14 @@ export default function RegistrarMenor() {
         telefono: '',
         archivo: null,
     });
+
+     // Redirige a la página AgregarMenores y pasa los datos del menor como parámetros
+     const nuevaURL = `/menor?dni=${formData.dni}&nombre=${formData.nombre}&apellido=${formData.apellido}`;
+     window.location.href = nuevaURL;
   };
 
-  function redireccionarAPagina() {
-    window.location.href = '/registrar';
+  function redireccionarAMenor() {
+    window.location.href = '/menor';
   }
 
   return (

@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './registrar.css';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useRouter } from 'next/router';
 
 
 export default function Registrar() {
@@ -28,7 +29,9 @@ export default function Registrar() {
     forma_pago: '',
   });
   const [clienteInfo, setClienteInfo] = useState(null); // State to store the client data
- 
+  
+  const [error, setError] = useState(null);
+
 
 
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function Registrar() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-  
+    //setError(null); // Reiniciar los errores antes de realizar la solicitud
     try {
       // Realiza la solicitud POST a Laravel
       const response = await axios.post(BASE_URL + '/registrar', formData);
@@ -101,6 +104,7 @@ export default function Registrar() {
       if (error.response.data.errors) {
         const validationErrors = Object.values(error.response.data.errors).join(', ');
         toast.error(validationErrors);
+        setError(validationErrors);
       } else {
         // Maneja otros errores de la solicitud
         console.error(error);
@@ -272,9 +276,18 @@ export default function Registrar() {
             </Container>
             <br/><br/>
             <Container className='menorACargo'>                               
-            <Button variant="outline-success" onClick={() => { handleRegister(); redireccionarAMenor(); }}>+Menor a cargo</Button>
-
-            </Container>
+            <Button
+              variant="outline-success"
+              onClick={() => {
+                handleRegister();
+                if (!error) {
+                  redireccionarAMenor();
+                }
+              }}
+            >
+              +Menor a cargo
+            </Button>
+                  </Container>
           
             <Container className='botones'>
                 <Button variant="outline-primary">Cancelar</Button>
