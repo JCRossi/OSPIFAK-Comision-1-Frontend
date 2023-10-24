@@ -18,7 +18,7 @@ export default function Datos() {
         const data = response.data;
 
         console.log(data);
-        
+
         setTitular({
           numeroIdentificacion: data.DNI,
           nombreApellido: `${data.nombre} ${data.apellido}`,
@@ -28,13 +28,16 @@ export default function Datos() {
           telefono: data.telefono,
         });
 
-        setIntegrantes(
-          data.clientes_menores.map((integrante) => ({
-            numeroIdentificacion: integrante.dni,
-            nombreApellido: `${integrante.nombre} ${integrante.apellido}`,
-            edad: new Date().getFullYear() - new Date(integrante.fecha_nacimiento).getFullYear(),
-          }))
-        );
+        // Verificar si existen integrantes antes de configurar el estado.
+        if (data.clientes_menores) {
+          setIntegrantes(
+            data.clientes_menores.map((integrante) => ({
+              numeroIdentificacion: integrante.dni,
+              nombreApellido: `${integrante.nombre} ${integrante.apellido}`,
+              edad: new Date().getFullYear() - new Date(integrante.fecha_nacimiento).getFullYear(),
+            }))
+          );
+        }
       })
       .catch((error) => {
         console.error('Error al obtener los datos:', error);
@@ -49,7 +52,7 @@ export default function Datos() {
             <h2>Información del Titular</h2>
             {titular ? (
               <>
-                <p className="info-label">Número de Identificación: {titular.numeroIdentificacion}</p>
+                <p className="info-label">Número de Identificacion: {titular.numeroIdentificacion}</p>
                 <p className="info-label">Nombre y Apellido: {titular.nombreApellido}</p>
                 <p className="info-label">Fecha de Nacimiento: {titular.fechaNacimiento}</p>
                 <p className="info-label">Email: {titular.email}</p>
@@ -66,12 +69,12 @@ export default function Datos() {
               <ul className='uldatos'>
                 {integrantes.map(integrante => (
                   <li key={integrante.numeroIdentificacion} className="integrante-item">
-                    ID: {integrante.numeroIdentificacion}, Nombre: {integrante.nombreApellido}, Edad: {integrante.edad}
+                    Número de Identificacion: {integrante.numeroIdentificacion}, Nombre: {integrante.nombreApellido}, Edad: {integrante.edad}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>Cargando datos de los integrantes...</p>
+              <p>No hay integrantes en el plan familiar.</p>
             )}
           </div>
         </div>
