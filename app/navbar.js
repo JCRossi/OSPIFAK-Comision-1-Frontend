@@ -1,3 +1,5 @@
+"use client";
+
 import  "./globals.css";
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

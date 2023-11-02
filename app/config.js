@@ -1,1 +1,1 @@
-export const API = 'https://ospifak-backend-9b2vetlqn-opsifak.vercel.app/rest';
+export const API = 'http://localhost:8000/rest'; // cambiar por el deploy actual de vercel
