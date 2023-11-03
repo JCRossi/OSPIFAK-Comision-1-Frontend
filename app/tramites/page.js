@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Prestaciones from "../prestaciones/page.js";
+import CuponPago from "../cuponPago/page.js";
+import Reintegros from "../reintegros/page.js";
 
 export default function Tramites() {
   const [radioValue, setRadioValue] = useState('1');
@@ -18,6 +20,12 @@ export default function Tramites() {
   switch (radioValue) {
     case '1':
       selectedComponent = <Prestaciones />;
+      break;
+    case '2':
+    selectedComponent = <Reintegros />;
+    break;
+    case '4':
+      selectedComponent = <CuponPago />
       break;
     // Agrega más casos para las otras opciones y sus respectivos componentes
     default:

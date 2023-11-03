@@ -51,8 +51,11 @@ export default function Login() {
         // Almacenar el token de sesión en localStorage
         console.log('hola11111111111111111111111111111111111111111111111111111111111111111111111');
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('dni', response.data.cliente.dni);
+        const clienteData = JSON.stringify(response.data.cliente);
+        localStorage.setItem('cliente', clienteData);
         window.location.href = '/dashboard';
-        console.log(response.data.token);
+        console.log(response.data.cliente.dni);
       } else {
          console.log('chauu');
         //setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');

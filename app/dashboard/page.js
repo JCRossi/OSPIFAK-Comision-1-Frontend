@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../navbar';
+import NavbarPagina from '../navbar';
 import Tramites from '../tramites/page.js';
 
 const linkStyle = {
@@ -23,7 +23,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <NavbarPagina></NavbarPagina>
 
       <div className="cont text-center">
         <div style={{ marginTop: '3vh' }}>

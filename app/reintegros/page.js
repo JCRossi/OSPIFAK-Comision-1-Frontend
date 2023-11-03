@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import './prestaciones.css';
+import '../prestaciones/prestaciones.css';
 import axios from 'axios';
 
 export default function Prestaciones() {
@@ -20,7 +20,7 @@ export default function Prestaciones() {
         return;
       }
   
-      axios.post('http://127.0.0.1:8000/rest/prestaciones', { dni })
+      /*axios.post('http://127.0.0.1:8000/rest/reintegros'+'que es el clienteUsuario?????????', { dni })
         .then(response => {
           setPrestaciones(response.data);
           setLoading(false);
@@ -28,17 +28,12 @@ export default function Prestaciones() {
         .catch(error => {
           console.error('Error al obtener las solicitudes de prestación:', error);
           setLoading(false);
-        });
+        });*/
         
     }, []);
   
     return (
       <>
-        <div className="solicitar">
-          <a href="/prestacionesSolicitar">
-            <FontAwesomeIcon icon={faCirclePlus}/> Solicitar Prestación
-          </a>
-        </div>
         <div>
           {loading ? (
             <p>Cargando solicitudes...</p>
@@ -65,7 +60,7 @@ export default function Prestaciones() {
                 </tbody>
               </Table>
             ) : (
-              <p>No hay solicitudes de prestación disponibles.</p>
+              <p>No hay solicitudes de reintegros disponibles.</p>
             )
           )}
         </div>

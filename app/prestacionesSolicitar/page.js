@@ -1,16 +1,39 @@
 "use client"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function NuevaVista() {
-  const [selectedCliente, setSelectedCliente] = useState(''); // Estado para el cliente seleccionado
+  const dniFromLocalStorage = localStorage.getItem('dni'); // Obtener el DNI del Local Storage
+  const [selectedClienteDNI, setSelectedClienteDNI] = useState(dniFromLocalStorage || '');// Estado para almacenar el DNI del cliente seleccionado
+  const [menores, setMenores] = useState([]); // Estado para almacenar los menores
   const [profesional, setProfesional] = useState(''); // Estado para el campo Profesional
   const [matricula, setMatricula] = useState(''); // Estado para el campo Matricula
-  const [tipoPrestacion, setTipoPrestacion] = useState(''); // Estado para el campo Tipo de Prestación
+  const [tipoPrestacion, setTipoPrestacion] = useState('Consultas medicas');// Estado para el campo Tipo de Prestación
   const [instituto, setInstituto] = useState(''); // Estado para el campo Instituto
   const [fechaTurno, setFechaTurno] = useState(''); // Estado para la fecha del turno
   const [comentarios, setComentarios] = useState(''); // Estado para el campo Comentarios
 
+  useEffect(() => {
+    // Obtén el DNI del Local Storage
+    const dni = localStorage.getItem('dni');
+  
+    if (!dni) {
+      console.error('DNI no encontrado en el Local Storage');
+      return;
+    }
+  
+    axios
+      .post('http://127.0.0.1:8000/rest/menores', { dni })
+      .then((response) => {
+        setMenores(response.data);
+        console.log('Respuesta de la API de menores:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener los menores asociados:', error);
+      });
+  }, []);
+  
   const handleFileUpload = (e) => {
     // Lógica para manejar la carga de archivos
     const files = e.target.files;
@@ -19,24 +42,55 @@ export default function NuevaVista() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica para enviar el formulario (por ejemplo, una solicitud al servidor)
+
+    // Obtener el DNI del cliente propio desde el Local Storage
+    const dni = localStorage.getItem('dni');
+
+    // Crear un objeto con los datos del formulario
+    const formData = {
+      dni,
+      selectedClienteDNI,
+      profesional,
+      matricula,
+      tipoPrestacion,
+      instituto,
+      fechaTurno,
+      comentarios,
+    };
+
+    console.log(formData);
+
+    // Realizar una solicitud POST a la API
+    axios
+      .post('http://127.0.0.1:8000/rest/prestaciones/solicitudes', formData)
+      .then((response) => {
+        // Aquí puedes manejar la respuesta de la API
+        console.log('Respuesta de la API:', response.data);
+        // Redirigir a una página de confirmación o realizar otras acciones
+        window.location.href = '/dashboard';
+      })
+      .catch((error) => {
+        console.error('Error al enviar los datos:', error);
+      });
   };
 
   return (
     <div>
-      <h2>Solicitar Prestación</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
+    <h2>Solicitar Prestación</h2>
+    <form onSubmit={handleSubmit}>
+    <div className="form-group">
           <label>Seleccionar Cliente</label>
           <select
             className="form-control"
-            value={selectedCliente}
-            onChange={(e) => setSelectedCliente(e.target.value)}
+            value={selectedClienteDNI} // Usar el DNI en lugar del nombre
+            onChange={(e) => setSelectedClienteDNI(e.target.value)}
           >
-            {/* Opciones para seleccionar un cliente */}
-            <option value="cliente1">Cliente 1</option>
-            <option value="cliente2">Cliente 2</option>
-            {/* Agrega más opciones según tus clientes */}
+            <option value={localStorage.getItem('dni')}>Cliente Propio</option>
+            {menores.map((menor) => (
+              <option key={menor.id} value={menor.dni}>
+                {menor.nombre}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -68,10 +122,23 @@ export default function NuevaVista() {
             value={tipoPrestacion}
             onChange={(e) => setTipoPrestacion(e.target.value)}
           >
-            {/* Opciones para el tipo de prestación */}
-            <option value="prestacion1">Prestación 1</option>
-            <option value="prestacion2">Prestación 2</option>
-            {/* Agrega más opciones según tus tipos de prestación */}
+            <option value="Consultas medicas">Consultas medicas</option>
+            <option value="Consultas medicas domiciliarias">Consultas medicas domiciliarias</option>
+            <option value="Consulta medica online">Consulta medica online</option>
+            <option value="Internacion">Internacion</option>
+            <option value="Odontologia general">Odontologia general</option>
+            <option value="Ortodoncia">Ortodoncia</option>
+            <option value="Protesis odontologicas">Protesis odontologicas</option>
+            <option value="Implantes odontologicos">Implantes odontologicos</option>
+            <option value="Kinesiologia">Kinesiologia</option>
+            <option value="Psicologia">Psicologia</option>
+            <option value="Medicamentos en farmacia">Medicamentos en farmacia</option>
+            <option value="Medicamentos en internacion">Medicamentos en internacion</option>
+            <option value="Optica">Optica</option>
+            <option value="Cirugias esteticas">Cirugias esteticas</option>
+            <option value="Analisis clinicos">Analisis clinicos</option>
+            <option value="Analisis de diagnostico">Analisis de diagnostico</option>
+
           </select>
         </div>
 

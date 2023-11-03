@@ -1,0 +1,36 @@
+.text{
+    text-align: center;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+    color: rgb(53, 111, 66);
+}
+
+.subtext{
+    text-align: left;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    color: rgb(53, 111, 66);
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px; /* Espacio entre los botones */
+}
+
+.acciones{
+    margin-right: 0.5vw;
+}
+
+.elementos-container {
+    display: flex;
+    flex-direction: row; /* Los elementos se colocarán en una fila horizontal */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    margin-bottom: 1rem; /* Opcional, agrega un espacio entre los elementos */
+}
+
+/* Puedes ajustar los estilos según tus necesidades */
+.elementos-container input {
+    margin: 0.5vw;
+}
