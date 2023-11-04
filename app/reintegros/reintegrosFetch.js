@@ -7,6 +7,11 @@ export async function getReintegrosByClient(clienteUsuario) {
   return response.json();
 }
 
+export async function getTitularYMenoresACargo(clienteUsuario) {
+  const response = await fetch(API + "/clientes/" + clienteUsuario + "/titularYMenoresACargo");
+  return response.json();
+}
+
 export async function postReintegro(formData) {
     try {
       const response = await fetch(API + "/reintegros/", {
