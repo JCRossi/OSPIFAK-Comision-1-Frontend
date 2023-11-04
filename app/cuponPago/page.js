@@ -20,6 +20,8 @@ function CuponPago() {
 
   const [isButtonAvailable, setIsButtonAvailable] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const [menores, setMenores] = useState([]);
 
   const [planData, setPlanData] = useState({
@@ -108,6 +110,7 @@ function CuponPago() {
       if (response.status === 200) {
         console.log(response.data.nombre);
         setIsButtonAvailable(true);
+        setLoading(false);
         setPlanData(response.data);
       }
     } catch (error) {
@@ -118,6 +121,13 @@ function CuponPago() {
 
   return (
     <div className="container">
+      {loading ? (
+        <div className="card mx-auto" style={{ width: '200px', border: 'none' }}> {/* Establecemos el borde en "none" */}
+          <div className="card-body rounded" style={{ borderRadius: '20px' }}>
+            <p className="text-center">Cargando datos...</p>
+          </div>
+        </div>
+      ) : (
       <div className="card col-8 offset-2">
         <div className="card-body rounded" style={{ borderRadius: '20px' }}>
           <div className="input-group mb-3">
@@ -236,6 +246,7 @@ function CuponPago() {
           </div>
         </div>
       </div>
+       )}
     </div>
   );
 }
