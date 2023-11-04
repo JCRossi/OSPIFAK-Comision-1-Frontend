@@ -1,9 +1,7 @@
 "use client"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Container, Form, Button, ListGroup } from 'react-bootstrap';
-
+import React, { useState } from 'react';
+import { Container, Form, Button, Card, ListGroup } from 'react-bootstrap';
 
 export default function AgregarMenores() {
   const [menores, setMenores] = useState([]);
@@ -12,23 +10,6 @@ export default function AgregarMenores() {
     nombre: '',
     apellido: '',
   });
-
-  // Obtener los datos del menor de los parámetros de la URL
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const dni = params.get('dni');
-    const nombre = params.get('nombre');
-    const apellido = params.get('apellido');
-
-    if (dni && nombre && apellido) {
-      setFormData({
-        dni: dni,
-        nombre: nombre,
-        apellido: apellido,
-      });
-    }
-  }, []);
-
 
   const handleInputChange = (event) => {
     setFormData((prevFormData) => ({
@@ -52,23 +33,27 @@ export default function AgregarMenores() {
       apellido: '',
     });
   };
-  function redireccionarARegistrarMenor() {
-    window.location.href = '/registrarMenor';
-  }
+
   return (
-     <Container>
-      <h1>Agregar Menores a Cargo</h1>
-      <Form>
-        {/* ... (otros campos de entrada) */}
+    <Container>
+      <div className="col-8 offset-2">
+        <Card className="mt-4" style={{ borderRadius: '20px' }}>
+          <Card.Body>
+            <h1>Menores a Cargo</h1>
+            {menores.length > 0 ? (
+              <ul>
+                {menores.map((menor, index) => (
+                  <li key={index}>
+                    {menor.nombre} {menor.apellido}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Aún no tiene menores a cargo.</p>
+            )}
+            <Form>
 
-        <Button variant="primary" onClick={handleAddMenor}>
-          Mostar menor a cargo
-        </Button>
-      </Form>
-
-      <hr />
-
-      <h2>Menores Agregados</h2>
+            <h2>Menores Agregados</h2>
       <ListGroup>
         {menores.map((menor, index) => (
           <ListGroup.Item key={index}>
@@ -77,8 +62,45 @@ export default function AgregarMenores() {
         ))}
       </ListGroup>
 
-      <Link href="/registrarMenor">Registrar Menor</Link>
-   
+              <Form.Group className="mb-3">
+                <Form.Control
+                  id="dni"
+                  type="text"
+                  placeholder="DNI"
+                  value={formData.dni}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  id="nombre"
+                  type="text"
+                  placeholder="Nombre"
+                  value={formData.nombre}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  id="apellido"
+                  type="text"
+                  placeholder="Apellido"
+                  value={formData.apellido}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Button href="/registrarMenor" onClick={handleAddMenor}>
+                Agregar Menor a Cargo
+              </Button>
+            </Form>
+            <div className="form-group mt-4">
+              <Button href="/clientes" variant="outline-success">
+                Guardar Todo y Terminar
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
     </Container>
   );
 }
