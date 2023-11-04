@@ -1,24 +1,20 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import { Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { solicitarBaja } from './bajasFetch';
-import './bajas.css';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { getTitularYMenoresACargo } from '../reintegros/reintegrosFetch';
+//import { solicitarBaja } from "./bajasFetch";
 
 export default function Bajas() {
+
   const [showModal, setShowModal] = useState(false);
   const [titularYMenoresACargo, setTitularYMenoresACargo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBaja, setLoadingBaja] = useState(true);
-  const [solicitudBaja, setSolicitudBaja] = useState(null);
-  
-  
+
+
   const handleOpenModal = async () => {
     try {
       setLoading(true);
@@ -27,7 +23,6 @@ export default function Bajas() {
       const usuario = localStorage.getItem('nombre');
       const response = await getTitularYMenoresACargo(usuario);
       setTitularYMenoresACargo(response);
-
     } catch (error) {
       console.log(error);
       toast.error('Error al procesar la solicitud de baja');
@@ -36,28 +31,44 @@ export default function Bajas() {
     }
   };
 
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  const handleSolicitudBaja = async () => {
-      try {
-        setLoadingBaja(true);
-        const formData = new FormData();
-        formData.append('cliente_usuario', document.getElementById('seleccionarCliente').value);
-        formData.append('comentarios', document.getElementById('comentarios').value);
+  const handleConfirmation = () => {
+    const selectedCliente = document.getElementById('seleccionarCliente').value;
+    const selectedEntity = titularYMenoresACargo.menores.find((menor) => menor.nombre === selectedCliente);
 
-        const response = await solicitarBaja(formData);
-        toast.success('Baja solicitada con éxito');
-        router.push('/dashboard');
-      } catch (error) {
-        console.log(error);
-        toast.error('Error al procesar la solicitud de baja');
-      } finally {
-        setLoadingBaja(false);
-      }
-  }
+    const confirmMessage = `¿Está seguro que desea solicitar la baja de ${
+      selectedEntity ? selectedEntity.nombre : titularYMenoresACargo.cliente.nombre
+    } (DNI ${
+      selectedEntity ? selectedEntity.dni : titularYMenoresACargo.cliente.dni
+    })?\nEsta acción no podrá revertirse.`;
+
+    if (window.confirm(confirmMessage)) {
+      handleSolicitudBaja();
+    }
+  };
+
+  const handleSolicitudBaja = async () => {
+    try {
+      setLoadingBaja(true);
+      const formData = new FormData();
+      formData.append('cliente_usuario', document.getElementById('seleccionarCliente').value);
+      formData.append('comentarios', document.getElementById('comentarios').value);
+
+      const response = await solicitarBaja(formData);
+      handleCloseModal();
+
+      window.location.href = '/dashboard';
+      toast.success('Baja solicitada con éxito');
+    } catch (error) {
+      console.log(error);
+      toast.error('Error al procesar la solicitud de baja');
+    } finally {
+      setLoadingBaja(false);
+    }
+  };
 
   return (
     <>
@@ -109,29 +120,14 @@ export default function Bajas() {
                 ></textarea>
               </div>
               <div className="form-group mt-3 float-end mt-3 ">
-                <a href="/dashboard" className="btn btn-outline-primary">
+                <button onClick={handleCloseModal} className="btn btn-outline-primary">
                   Cancelar
-                </a>
-                <form onSubmit={handleSolicitudBaja} style={{display: 'inline-block'}}>
-                  <button 
-                    type="submit"  
-                    className="btn btn-outline-success ml-3"
-                    onClick={() => {
-                      const selectedCliente = document.getElementById('seleccionarCliente').value;
-                      const selectedEntity = titularYMenoresACargo.menores.find((menor) => menor.nombre === selectedCliente);
-        
-                      const confirmMessage = `¿Está seguro que desea solicitar la baja de ${
-                        selectedEntity ? selectedEntity.nombre : titularYMenoresACargo.cliente.nombre
-                      } (DNI ${
-                        selectedEntity ? selectedEntity.dni : titularYMenoresACargo.cliente.dni
-                      })?\nEsta acción no podrá revertirse.`;
-        
-                      if (window.confirm(confirmMessage)) {
-                        handleSolicitudBaja();
-                      }
-                    }}
-                  > Confirmar </button>
-                </form>
+                </button> 
+                <button
+                  type="button"  
+                  className="btn btn-outline-success ml-3"
+                  onClick={handleConfirmation}
+                > Confirmar </button>
               </div>
             </>
           )}
