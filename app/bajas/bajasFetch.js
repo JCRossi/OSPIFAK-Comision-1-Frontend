@@ -2,7 +2,14 @@
 
 import { API } from '../config';
 
-export async function solicitarBaja(clienteUsuario) {
-  const response = await fetch(API + "/clientes/" + clienteUsuario + "/delete");
+export async function solicitarBaja(formData) {
+  const response = await fetch(API + "/clientes/" + "delete", {
+    method: "POST",
+    body: formData,
+    mode: 'cors',
+    headers: {
+      'Accept': 'application/json',
+    },
+  });
   return response.json();
 }

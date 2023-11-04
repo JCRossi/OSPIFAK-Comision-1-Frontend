@@ -47,14 +47,6 @@ const SolicitarReintegro = () => {
       fetchTitularYMenoresACargo();
   }, []);
 
-  function formDataToObject(formData) {
-    const object = {};
-    formData.forEach((value, key) => {
-        object[key] = value;
-    });
-    return object;
-}
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -88,7 +80,6 @@ const SolicitarReintegro = () => {
     });
 
     try {
-      console.log(formDataToObject(formData));
       const response = await postReintegro(formData);
       toast.success('Reintegro solicitado con éxito');
       router.push('/dashboard');
