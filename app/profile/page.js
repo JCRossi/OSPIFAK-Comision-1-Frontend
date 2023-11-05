@@ -170,8 +170,36 @@ export default function ClientePerfil() {
         <h2 className="subtext">
             Seguridad
         </h2>
-        <label>Usuario: </label>
-        <label>Contraseña: </label>
+            <div className="row">
+                <div className="col-md-6">
+                    <Button variant="light" size="lg" onClick={() => handleEdit(2)}>
+                        <FontAwesomeIcon icon={faPencil} />
+                    </Button>
+                    <label style={{ marginLeft: '0.5vw' }}>Usuario: </label>
+                    <input
+                        style={{ marginTop: '0.5vw', marginBottom: '0.5vw' }}
+                        type="text"
+                        className="form-control"
+                        value={clienteData.usuario}
+                        onChange={(e) => setClienteData(e.target.value)}
+                        readOnly = {enabledInput != 8}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <Button variant="light" size="lg" onClick={() => handleEdit(3)}>
+                        <FontAwesomeIcon icon={faPencil} />
+                    </Button>
+                    <label style={{ marginLeft: '0.5vw' }}>Constraseña: </label>
+                    <input
+                        style={{ marginTop: '0.5vw', marginBottom: '0.5vw' }}
+                        type="text"
+                        className="form-control"
+                        value={clienteData.password}
+                        onChange={(e) => setClienteData(e.target.value)}
+                        readOnly = {enabledInput != 9}
+                    />   
+                </div>
+            </div>
         <div>
             
         </div>
