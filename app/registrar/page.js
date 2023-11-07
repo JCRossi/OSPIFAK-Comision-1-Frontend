@@ -4,7 +4,7 @@ import { Form, Row, Col, Container } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 import { BASE_URL } from '../constantes';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //import Navbar from '../navbar';
 import './registrar.css';
@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 
 
 export default function Registrar() {
+  const [clienteGuardado, setClienteGuardado] = useState(false);
   const [planes, setPlanes] = useState([]);
   const [formData, setFormData] = useState({
     usuario: '',
@@ -98,6 +99,7 @@ export default function Registrar() {
           plan_id: '',
           forma_pago: '',
         });
+        setClienteGuardado(true);
       }
     } catch (error) {
       // Comprueba si la respuesta contiene errores de validación
@@ -279,9 +281,10 @@ export default function Registrar() {
             <Button
               variant="outline-success"
               onClick={() => {
-                handleRegister();
-                if (!error) {
+                if (clienteGuardado) {
                   redireccionarAMenor();
+                } else {
+                  toast.warning('Por favor, guarde los datos del cliente primero.');
                 }
               }}
             >
@@ -294,7 +297,6 @@ export default function Registrar() {
                 <Button variant="outline-success" onClick={() => { handleRegister(); redireccionarALogin(); }}>Guardar datos</Button>
 
             </Container>
-            <ToastContainer />
            
     </>
   );
