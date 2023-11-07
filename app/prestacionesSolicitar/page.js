@@ -1,6 +1,7 @@
 "use client"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
 
 export default function NuevaVista() {
   const [selectedCliente, setSelectedCliente] = useState(''); // Estado para el cliente seleccionado
@@ -120,7 +121,7 @@ export default function NuevaVista() {
             Confirmar
           </button>
           <button type="button" className="btn btn-secondary">
-            Cancelar
+          <i className="fa fa-arrow-left text-white"></i> Volver
           </button>
         </div>
       </form>
