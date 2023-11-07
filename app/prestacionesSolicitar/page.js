@@ -3,6 +3,7 @@ import './prestacionesSolicitar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import 'font-awesome/css/font-awesome.min.css';
 
 export default function NuevaVista() {
   const dniFromLocalStorage = localStorage.getItem('dni'); // Obtener el DNI del Local Storage
@@ -222,8 +223,8 @@ export default function NuevaVista() {
           <button type="submit" className="btn btn-primary mr-2">
             Confirmar
           </button>
-          <button type="button" className="btn btn-secondary" onClick={handleCancelarClick}>
-            Cancelar
+          <button type="button" className="btn btn-secondary">
+          <i className="fa fa-arrow-left text-white"></i> Volver
           </button>
         </div>
       </form>
