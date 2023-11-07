@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from 'react-bootstrap';
+import { Modal, Row, Col } from 'react-bootstrap'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { getTitularYMenoresACargo } from '../reintegros/reintegrosFetch';
-//import { solicitarBaja } from "./bajasFetch";
+import { solicitarBaja, getBajas } from "./bajasFetch";
+import SolicitudBaja from "./solicitudBaja";
 
 export default function Bajas() {
 
@@ -13,7 +14,26 @@ export default function Bajas() {
   const [titularYMenoresACargo, setTitularYMenoresACargo] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBaja, setLoadingBaja] = useState(true);
+  const [solicitudesBajaAnteriores, setSolicitudesBajaAnteriores] = useState([]);
+  const [loadingSolicitudesBajaAnteriores, setLoadingSolicitudesBajaAnteriores] = useState(true);
 
+
+  useEffect(() => {
+    const fetchBajasAnteriores = async () => {
+        try {
+          setLoadingSolicitudesBajaAnteriores(true);
+            const usuario = localStorage.getItem('nombre');
+            const response = await getBajas(usuario);
+            setSolicitudesBajaAnteriores(response);
+        } catch (error) {
+            console.error(error);
+        } finally {
+          setLoadingSolicitudesBajaAnteriores(false);
+        }
+    }
+
+    fetchBajasAnteriores();
+}, []);
 
   const handleOpenModal = async () => {
     try {
@@ -54,7 +74,8 @@ export default function Bajas() {
     try {
       setLoadingBaja(true);
       const formData = new FormData();
-      formData.append('cliente_usuario', document.getElementById('seleccionarCliente').value);
+      formData.append('cliente_usuario', localStorage.getItem('nombre'));
+      formData.append('paciente_nombre', document.getElementById('seleccionarCliente').value);
       formData.append('comentarios', document.getElementById('comentarios').value);
 
       const response = await solicitarBaja(formData);
@@ -94,7 +115,7 @@ export default function Bajas() {
               <div className="form-group mb-3">
                 <label className="form-label text-muted" style={{fontSize: 'medium'}}>Seleccionar cliente *</label>
                 <select className="form-select" id="seleccionarCliente" name="seleccionarCliente" defaultValue={localStorage.getItem('nombre')}>
-                  <option key={titularYMenoresACargo.cliente.usuario} value={titularYMenoresACargo.cliente.usuario}>{titularYMenoresACargo.cliente.nombre}</option>
+                  <option key={titularYMenoresACargo.cliente.usuario} value={titularYMenoresACargo.cliente.nombre}>{titularYMenoresACargo.cliente.nombre}</option>
                   {titularYMenoresACargo.menores.map((menor) => (
                     <option key={menor.nombre} value={menor.nombre}>{menor.nombre}</option>
                   ))}
@@ -133,6 +154,44 @@ export default function Bajas() {
           )}
         </Modal.Body>
       </Modal>
+
+      <div>
+        {loadingSolicitudesBajaAnteriores ? (
+            <h1>Cargando solicitudes de baja..</h1>
+        ) : (
+            <div>
+                <Row className="solicitudesBaja">
+                    <Col>
+                        {solicitudesBajaAnteriores && solicitudesBajaAnteriores.menoresData.length + solicitudesBajaAnteriores.titularData.length === 0 ? (
+                            <p>No se encontraron solicitudes de baja.</p>
+                        ) : (
+                            <div className="solicitudBaja" style={{ marginBottom: "16px", padding: "16px" }}>
+                                <table className="solicitudBaja-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                                <thead>
+                                    <tr>
+                                    <th className="text-muted" style={{ textAlign: "center", padding: "8px" }}>DNI</th>
+                                    <th className="text-muted" style={{ textAlign: "center", padding: "8px" }}>Apellido y nombre</th>
+                                    <th className="text-muted" style={{ textAlign: "center", padding: "8px" }}>Fecha solicitud</th>
+                                    <th className="text-muted" style={{ textAlign: "center", padding: "8px" }}>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.values(solicitudesBajaAnteriores.titularData).map((solicitudBaja) => (
+                                        <SolicitudBaja data={solicitudBaja} key={solicitudBaja.id} />
+                                    ))}
+                                    {Object.values(solicitudesBajaAnteriores.menoresData).map((solicitudBaja) => (
+                                        <SolicitudBaja data={solicitudBaja} key={solicitudBaja.id} />
+                                    ))}
+                                </tbody>
+                                </table>
+                            </div>
+                            
+                        )}
+                    </Col>
+                </Row>
+            </div>
+        )}
+      </div>
     </>
   );
 }
