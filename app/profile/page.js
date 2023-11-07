@@ -70,9 +70,6 @@ export default function ClientePerfil() {
         <div>
             <div className="row">
                 <div className="col-md-6">
-                    <Button variant="light" size="lg" onClick={() => handleEdit(1)}>
-                        <FontAwesomeIcon icon={faPencil} />
-                    </Button>
                     <label style={{ marginLeft: '0.5vw' }}>DNI: </label>
                     <input
                         style={{ marginTop: '0.5vw', marginBottom: '0.5vw' }}
@@ -80,12 +77,12 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.dni}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 1}
+                        readOnly
                     />
 
                     <div className="row">
                         <div className="col-md-6">
-                            <Button variant="light" size="lg" onClick={() => handleEdit(2)}>
+                            <Button variant="light" size="lg" onClick={() => handleEdit(1)}>
                                 <FontAwesomeIcon icon={faPencil} />
                             </Button>
                             <label style={{ marginLeft: '0.5vw' }}>Apellido: </label>
@@ -95,11 +92,11 @@ export default function ClientePerfil() {
                                 className="form-control"
                                 value={clienteData.apellido}
                                 onChange={(e) => setClienteData(e.target.value)}
-                                readOnly = {enabledInput != 2}
+                                readOnly = {enabledInput != 1}
                             />
                         </div>
                         <div className="col-md-6">
-                            <Button variant="light" size="lg" onClick={() => handleEdit(3)}>
+                            <Button variant="light" size="lg" onClick={() => handleEdit(2)}>
                                 <FontAwesomeIcon icon={faPencil} />
                             </Button>
                             <label style={{ marginLeft: '0.5vw' }}>Nombre: </label>
@@ -109,11 +106,11 @@ export default function ClientePerfil() {
                                 className="form-control"
                                 value={clienteData.nombre}
                                 onChange={(e) => setClienteData(e.target.value)}
-                                readOnly = {enabledInput != 3}
+                                readOnly = {enabledInput != 2}
                             />   
                         </div>
                     </div>
-                    <Button variant="light" size="lg" onClick={() => handleEdit(4)}>
+                    <Button variant="light" size="lg" onClick={() => handleEdit(3)}>
                         <FontAwesomeIcon icon={faPencil} />
                     </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Fecha Nacimiento: </label>
@@ -123,12 +120,12 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={formatFecha(clienteData.fechaNacimiento)}
                         onChange={(e) => setClienteData(parseFecha(e.target.value))}
-                        readOnly = {enabledInput != 4}
+                        readOnly = {enabledInput != 3}
                     />
                 </div>
 
                 <div className="col-md-6">
-                    <Button variant="light" size="lg" onClick={() => handleEdit(5)}>
+                    <Button variant="light" size="lg" onClick={() => handleEdit(4)}>
                         <FontAwesomeIcon icon={faPencil} />
                     </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Email: </label>
@@ -138,9 +135,9 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.email}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 5}
+                        readOnly = {enabledInput != 4}
                     />
-                    <Button variant="light" size="lg" onClick={() => handleEdit(6)}>
+                    <Button variant="light" size="lg" onClick={() => handleEdit(5)}>
                         <FontAwesomeIcon icon={faPencil} />
                     </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Dirección: </label>
@@ -150,9 +147,9 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.direccion}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 6}
+                        readOnly = {enabledInput != 5}
                     />
-                    <Button variant="light" size="lg" onClick={() => handleEdit(7)}>
+                    <Button variant="light" size="lg" onClick={() => handleEdit(6)}>
                         <FontAwesomeIcon icon={faPencil} />
                     </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Teléfono: </label>
@@ -162,7 +159,7 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.telefono}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 7}
+                        readOnly = {enabledInput != 6}
                     />
                 </div>
             </div>
@@ -172,9 +169,6 @@ export default function ClientePerfil() {
         </h2>
             <div className="row">
                 <div className="col-md-6">
-                    <Button variant="light" size="lg" onClick={() => handleEdit(2)}>
-                        <FontAwesomeIcon icon={faPencil} />
-                    </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Usuario: </label>
                     <input
                         style={{ marginTop: '0.5vw', marginBottom: '0.5vw' }}
@@ -182,11 +176,11 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.usuario}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 8}
+                        readOnly
                     />
                 </div>
                 <div className="col-md-6">
-                    <Button variant="light" size="lg" onClick={() => handleEdit(3)}>
+                    <Button variant="light" size="lg" onClick={() => handleEdit(7)}>
                         <FontAwesomeIcon icon={faPencil} />
                     </Button>
                     <label style={{ marginLeft: '0.5vw' }}>Constraseña: </label>
@@ -196,7 +190,7 @@ export default function ClientePerfil() {
                         className="form-control"
                         value={clienteData.password}
                         onChange={(e) => setClienteData(e.target.value)}
-                        readOnly = {enabledInput != 9}
+                        readOnly = {enabledInput != 7}
                     />   
                 </div>
             </div>

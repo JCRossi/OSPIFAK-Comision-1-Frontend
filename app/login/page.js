@@ -41,21 +41,17 @@ export default function Login() {
   const login = async (usuario, password) => {
     try {
       console.log('hola');
-      const response = await axios.post('https://ospifak-backend-huxv5l5mf-opsifak.vercel.app/rest/login', { usuario, password, },{
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        }
-      });
+      const response = await axios.post('http://127.0.0.1:8000/rest/login', { usuario, password, });
       if (response.status==200) {
         // Almacenar el token de sesión en localStorage
         console.log('hola11111111111111111111111111111111111111111111111111111111111111111111111');
+        console.log(response.data)
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('dni', response.data.cliente.dni);
-        const clienteData = JSON.stringify(response.data.cliente);
+        localStorage.setItem('dni', response.data.usuario.dni);
+        const clienteData = JSON.stringify(response.data.usuario);
         localStorage.setItem('cliente', clienteData);
         window.location.href = '/dashboard';
-        console.log(response.data.cliente.dni);
+        console.log(response.data.usuario.dni);
       } else {
          console.log('chauu');
         //setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');

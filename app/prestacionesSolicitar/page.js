@@ -1,4 +1,5 @@
 "use client"
+import './prestacionesSolicitar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -13,10 +14,24 @@ export default function NuevaVista() {
   const [instituto, setInstituto] = useState(''); // Estado para el campo Instituto
   const [fechaTurno, setFechaTurno] = useState(''); // Estado para la fecha del turno
   const [comentarios, setComentarios] = useState(''); // Estado para el campo Comentarios
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [clienteData, setClienteData] = useState({
+    dni: '',
+    nombre: '',
+    apellido: '',
+    fechaNacimiento: '',
+    forma_pago: '',
+  });
+  
 
   useEffect(() => {
     // Obtén el DNI del Local Storage
     const dni = localStorage.getItem('dni');
+    const storedClienteData = JSON.parse(localStorage.getItem('cliente'));
+    if (storedClienteData) {
+      // Si se encuentran datos en el localStorage, actualiza el estado
+      setClienteData(storedClienteData);
+    }
   
     if (!dni) {
       console.error('DNI no encontrado en el Local Storage');
@@ -71,7 +86,13 @@ export default function NuevaVista() {
       })
       .catch((error) => {
         console.error('Error al enviar los datos:', error);
+        setErrorMessages(error.response.data.errors);
       });
+  };
+
+  const handleCancelarClick = () => {
+    // Redirecciona al usuario a /dashboard
+    window.location.href = '/dashboard';
   };
 
   return (
@@ -85,7 +106,7 @@ export default function NuevaVista() {
             value={selectedClienteDNI} // Usar el DNI en lugar del nombre
             onChange={(e) => setSelectedClienteDNI(e.target.value)}
           >
-            <option value={localStorage.getItem('dni')}>Cliente Propio</option>
+            <option value={localStorage.getItem('dni')}>{clienteData.apellido} {clienteData.nombre}</option>
             {menores.map((menor) => (
               <option key={menor.id} value={menor.dni}>
                 {menor.nombre}
@@ -99,19 +120,25 @@ export default function NuevaVista() {
             <label>Profesional</label>
             <input
               type="text"
-              className="form-control"
+              className= {`form-control ${errorMessages.profesional ? 'error-input' : ''}`}
               value={profesional}
               onChange={(e) => setProfesional(e.target.value)}
             />
+            {errorMessages.profesional && (
+              <h5 className="text-danger">{errorMessages.profesional[0]}</h5>
+            )}
           </div>
           <div className="form-group col-md-6">
             <label>Matricula</label>
             <input
               type="number"
-              className="form-control"
+              className= {`form-control ${errorMessages.matricula ? 'error-input' : ''}`}
               value={matricula}
               onChange={(e) => setMatricula(e.target.value)}
             />
+            {errorMessages.matricula && (
+              <h5 className="text-danger">{errorMessages.matricula[0]}</h5>
+            )}
           </div>
         </div>
 
@@ -140,6 +167,9 @@ export default function NuevaVista() {
             <option value="Analisis de diagnostico">Analisis de diagnostico</option>
 
           </select>
+          {errorMessages.tipoPrestacion && (
+              <h5 className="text-danger">{errorMessages.tipoPrestacion[0]}</h5>
+            )}
         </div>
 
         <div className="form-row">
@@ -147,19 +177,25 @@ export default function NuevaVista() {
             <label>Instituto</label>
             <input
               type="text"
-              className="form-control"
+              className= {`form-control ${errorMessages.instituto ? 'error-input' : ''}`}
               value={instituto}
               onChange={(e) => setInstituto(e.target.value)}
             />
+            {errorMessages.instituto && (
+              <h5 className="text-danger">{errorMessages.instituto[0]}</h5>
+            )}
           </div>
           <div className="form-group col-md-6">
             <label>Fecha de Turno</label>
             <input
               type="date"
-              className="form-control"
+              className= {`form-control ${errorMessages.fechaTurno ? 'error-input' : ''}`}
               value={fechaTurno}
               onChange={(e) => setFechaTurno(e.target.value)}
             />
+            {errorMessages.fechaTurno && (
+              <h5 className="text-danger">{errorMessages.fechaTurno[0]}</h5>
+            )}
           </div>
         </div>
 
@@ -186,7 +222,7 @@ export default function NuevaVista() {
           <button type="submit" className="btn btn-primary mr-2">
             Confirmar
           </button>
-          <button type="button" className="btn btn-secondary">
+          <button type="button" className="btn btn-secondary" onClick={handleCancelarClick}>
             Cancelar
           </button>
         </div>

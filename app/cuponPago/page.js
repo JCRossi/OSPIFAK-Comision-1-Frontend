@@ -39,8 +39,9 @@ function CuponPago() {
     if (storedClienteData) {
       // Si se encuentran datos en el localStorage, actualiza el estado
       setClienteData(storedClienteData);
-      obtenerMenores(storedClienteData.dni);
       obtenerPlan(storedClienteData.dni);
+      obtenerMenores(storedClienteData.dni);
+      
     }
   }, []);
 
@@ -72,12 +73,9 @@ function CuponPago() {
     }
   
     // Calcula el precio total
-    const precioTotal = ((planData.precio_jovenes * cantidadMenores) + precioTitular ) * factorMultiplicacion;
-    console.log("Titular: "+precioTitular);
-    console.log("Precio jovenes: "+planData.precio_jovenes);
-    console.log("Cantidad menores: "+cantidadMenores);
-    console.log("Factor: "+factorMultiplicacion);
-    console.log("Total: "+precioTotal);
+    const precioJovenes = planData.precio_jovenes * cantidadMenores
+    console.log(parseInt(precioTitular) + parseInt(precioJovenes));
+    const precioTotal = (parseInt(precioTitular) + parseInt(precioJovenes)) * parseInt(factorMultiplicacion);
     return precioTotal;
   }
   
@@ -96,7 +94,7 @@ function CuponPago() {
       const response = await axios.post('http://127.0.0.1:8000/rest/menores', { dni: dniCliente });
 
       if (response.status === 200) {
-        setMenores(response.data.menores);
+        setMenores(response.data);
       }
     } catch (error) {
         console.error('Error al obtener los datos de los menores:', error);
