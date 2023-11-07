@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Prestaciones from "../prestaciones/page.js";
 import CuponPago from "../cuponPago/page.js";
-import Reintegros from "../reintegros/page.js";
 import Reintegros from "../reintegros/reintegros.js";
 import Bajas from '../bajas/page.js';
 
