@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://ospifak-backend-bzzihan2s-opsifak.vercel.app/rest';

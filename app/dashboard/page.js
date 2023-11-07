@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarPagina from '../navbar';
 import Tramites from '../tramites/page.js';
+import Datos from '../datos/page';
 
 const linkStyle = {
   textDecoration: 'none',
@@ -42,7 +43,7 @@ export default function Dashboard() {
             Mis trámites
           </span>
         </div>
-        {radioValueDashboard === '1' && <div>Todavía sin implementar</div>}
+        {radioValueDashboard === '1' && <Datos />}
         {radioValueDashboard === '2' && <Tramites />}
       </div>
     </>
